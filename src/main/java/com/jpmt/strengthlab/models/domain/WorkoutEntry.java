@@ -43,6 +43,6 @@ public class WorkoutEntry {
     private String notes;
 
     @OneToMany(mappedBy="workoutEntry", cascade = CascadeType.ALL, orphanRemoval = true)
-    @OrderBy("setNumber ASC")
+    @OrderBy("set_number ASC")
     private Set<WorkoutSet> sets = new LinkedHashSet<>();
 }

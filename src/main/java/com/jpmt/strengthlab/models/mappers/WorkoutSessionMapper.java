@@ -11,7 +11,7 @@ import java.time.OffsetDateTime;
 import java.util.Collections;
 import java.util.List;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {com.jpmt.strengthlab.models.mappers.TrainingSetTemplateMapper.class})
 public interface WorkoutSessionMapper {
     @Mapping(source = "trainingSessionTemplateId", target = "trainingSessionTemplate.id")
     WorkoutSession toEntity(WorkoutSessionRequest dto);
@@ -45,6 +45,7 @@ public interface WorkoutSessionMapper {
    WorkoutDayResponse toDayResponse(WorkoutSession entity);
 
    @Mapping(source = "conjugatedDayType", target = "conjugateDayType")
+   @Mapping(source = "setTemplates", target = "setTemplates")
    WorkoutDayResponse.TemplateInfo toTemplateInfo(TrainingSessionTemplate entity);
 
    @Mapping(source = "id", target = "entryId")

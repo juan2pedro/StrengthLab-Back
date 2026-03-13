@@ -27,7 +27,7 @@ public class WorkoutSet {
 
     @Min(1)
     @Column(name = "set_number", nullable = false)
-    private Integer setNumber;
+    private Integer sequenceNumber;
 
     @Column(name = "reps", nullable = false)
     private Integer reps;
