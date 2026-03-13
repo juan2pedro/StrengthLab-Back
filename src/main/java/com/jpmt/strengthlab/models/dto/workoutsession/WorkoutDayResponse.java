@@ -1,5 +1,7 @@
 package com.jpmt.strengthlab.models.dto.workoutsession;
 
+import com.jpmt.strengthlab.models.dto.trainingsettemplate.TrainingSetTemplateResponse;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -15,7 +17,8 @@ public record WorkoutDayResponse(
             Integer weekNumber,
             Integer dayInWeek,
             String conjugateDayType,
-            String notes
+            String notes,
+            List <TrainingSetTemplateResponse> setTemplates
     ) {}
 
     public record Entry(
@@ -48,7 +51,7 @@ public record WorkoutDayResponse(
 
     public record Set(
             Long id,
-            Integer setNumber,
+            Integer sequenceNumber,
             Integer reps,
             Double weight,
             String intensityType,   // RIR/RPE/PERCENTAGE

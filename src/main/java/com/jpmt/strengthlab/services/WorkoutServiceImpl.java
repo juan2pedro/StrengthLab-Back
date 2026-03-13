@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class WorkoutServiceImpl implements WorkoutService {
-
     private final WorkoutSessionRepository sessionRepository;
     private final WorkoutEntryRepository entryRepository;
     private final TrainingSessionTemplateRepository templateRepository;
@@ -94,6 +93,14 @@ public class WorkoutServiceImpl implements WorkoutService {
     @Transactional(readOnly = true)
     public WorkoutDayResponse findFullDayById(Long id) {
         WorkoutSession session = sessionRepository.findHeaderById(id).orElseThrow(() -> new ResourceNotFoundException("WorkoutSession", "id", id));
+
+        Long templateId = session.getTrainingSessionTemplate() != null ? session.getTrainingSessionTemplate().getId() : null;
+        if (templateId != null) {
+            TrainingSessionTemplate fullTemplate = templateRepository.findById(templateId)
+                    .orElseThrow(() -> new ResourceNotFoundException("TrainingSessionTemplate", "id", templateId));
+            session.setTrainingSessionTemplate(fullTemplate);
+        }
+
         if(session.getEntries()==null || session.getEntries().isEmpty()){
             return workoutSessionMapper.toDayResponse(session);
         }
@@ -106,7 +113,7 @@ public class WorkoutServiceImpl implements WorkoutService {
         for (WorkoutEntry entry : session.getEntries()) {
             LinkedHashSet<WorkoutSet> orderedSets = setsByEntryId
                     .getOrDefault(entry.getId(), List.of()).stream()
-                    .sorted(Comparator.comparingInt(WorkoutSet::getSetNumber))
+                    .sorted(Comparator.comparingInt(s -> s.getSequenceNumber() == null ? 0 : s.getSequenceNumber()))
                     .collect(Collectors.toCollection(LinkedHashSet::new));
 
             entry.setSets(orderedSets);

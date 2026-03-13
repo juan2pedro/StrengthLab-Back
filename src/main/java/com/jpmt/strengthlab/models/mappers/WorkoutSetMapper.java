@@ -18,13 +18,13 @@ public interface WorkoutSetMapper {
     @Mapping(target = "workoutEntry", ignore = true) // se setea en service
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(source = "setNumber", target = "setNumber")
+    @Mapping(source = "sequenceNumber", target = "sequenceNumber")
     WorkoutSet toEntity(WorkoutSetRequest request);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "workoutEntry", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(source = "setNumber", target = "setNumber")
+    @Mapping(source = "sequenceNumber", target = "sequenceNumber")
     void updateEntityFromRequest(WorkoutSetRequest request, @MappingTarget WorkoutSet entity);
 }

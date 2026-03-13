@@ -7,7 +7,7 @@ import java.time.OffsetDateTime;
 public record WorkoutSetResponse(
         Long id,
         Long workoutEntryId,
-        Integer setNumber,
+        Integer sequenceNumber,
         Integer reps,
         Double weight,
         IntensityType intensityType,
