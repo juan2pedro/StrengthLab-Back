@@ -89,7 +89,7 @@ public class WorkoutServiceImpl implements WorkoutService {
         return result.stream().map(workoutSessionMapper::toSummaryResponse).toList();
     }
 
-
+    @Override
     @Transactional(readOnly = true)
     public WorkoutDayResponse findFullDayById(Long id) {
         WorkoutSession session = sessionRepository.findHeaderById(id).orElseThrow(() -> new ResourceNotFoundException("WorkoutSession", "id", id));

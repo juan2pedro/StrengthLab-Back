@@ -2,6 +2,8 @@ package com.jpmt.strengthlab.controllers;
 
 import com.jpmt.strengthlab.exceptions.ResourceNotFoundException;
 import com.jpmt.strengthlab.models.dto.ApiErrorResponse;
+import jakarta.validation.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -59,4 +61,20 @@ public class ErrorHandlerExceptionController {
         );
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiError);
     }
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ApiErrorResponse> handleDataIntegrity(DataIntegrityViolationException ex) {
+       ApiErrorResponse apiError = new ApiErrorResponse(
+               null, ex.getMessage(), "Data Integrity Violation", HttpStatus.CONFLICT.value(), new Date()
+       );
+       return ResponseEntity.status(HttpStatus.CONFLICT).body(apiError);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ApiErrorResponse> handleConstraintViolation(ConstraintViolationException ex) {
+        ApiErrorResponse apiError = new ApiErrorResponse(
+                null, ex.getMessage(), "Constraint Violation", HttpStatus.BAD_REQUEST.value(), new Date()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
+    }
+
 }
