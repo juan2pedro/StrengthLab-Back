@@ -22,7 +22,7 @@ import java.util.List;
 
 @Service
 public class TrainingSessionServiceImpl implements TrainingSessionService {
-    String tsessiont = "TrainingSessionTemplate";
+
     private final TrainingSessionTemplateRepository sessionRepository;
     private final TrainingSetTemplateRepository setRepository;
     private final ExerciseRepository exerciseRepository;
@@ -63,7 +63,7 @@ public class TrainingSessionServiceImpl implements TrainingSessionService {
     @Transactional
     public TrainingSessionTemplateDetailResponse updateSession(Long id, TrainingSessionTemplateRequest request) {
         TrainingSessionTemplate entity = sessionRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(tsessiont, "id", id));
+                .orElseThrow(() -> new ResourceNotFoundException("TrainingSessionTemplate", "id", id));
 
         sessionMapper.updateEntityFromRequest(request, entity);
         TrainingSessionTemplate saved = sessionRepository.save(entity);
@@ -74,7 +74,7 @@ public class TrainingSessionServiceImpl implements TrainingSessionService {
     @Override
     public void deleteSessionById(Long id) {
         if (!sessionRepository.existsById(id)) {
-            throw new ResourceNotFoundException(tsessiont, "id", id);
+            throw new ResourceNotFoundException("TrainingSessionTemplate", "id", id);
         }
         sessionRepository.deleteById(id);
     }
@@ -83,7 +83,7 @@ public class TrainingSessionServiceImpl implements TrainingSessionService {
     @Override
     public TrainingSessionTemplateDetailResponse findSessionById(Long id) {
         TrainingSessionTemplate entity = sessionRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(tsessiont, "id", id));
+                .orElseThrow(() -> new ResourceNotFoundException("TrainingSessionTemplate", "id", id));
         return sessionMapper.toDetailResponse(entity);
     }
 
@@ -91,7 +91,7 @@ public class TrainingSessionServiceImpl implements TrainingSessionService {
     @Override
     public TrainingSetTemplateResponse saveSet(Long sessionId, TrainingSetTemplateRequest request) {
         TrainingSessionTemplate session = sessionRepository.findById(sessionId)
-                .orElseThrow(() -> new ResourceNotFoundException(tsessiont, "id", sessionId));
+                .orElseThrow(() -> new ResourceNotFoundException("TrainingSessionTemplate", "id", sessionId));
 
         Exercise exercise = exerciseRepository.findById(request.exerciseId())
                 .orElseThrow(() -> new ResourceNotFoundException("Exercise", "id", request.exerciseId()));

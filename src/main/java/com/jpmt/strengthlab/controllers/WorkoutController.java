@@ -118,13 +118,13 @@ public class WorkoutController {
     }
 
     @GetMapping("/full/{id}")
+    @Operation(summary = "Get a full workout session by date range", description = "Obtiene una sesion completa en un rango de fechas (por defecto today)")
     // <editor-fold desc="OpenAPI annotations">
-//    @Operation(summary = "Get a full workout session by date range", description = "Obtiene una sesion completa en un rango de fechas (por defecto today)")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "Lista de sesiones obtenida",
-//                    content = @Content(mediaType = "application/json",
-//                            schema = @Schema(implementation = WorkoutDayResponse.class)))
-//    })
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista de sesiones obtenida",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = WorkoutDayResponse.class)))
+    })
     // </editor-fold>
     public ResponseEntity<WorkoutDayResponse> getFullWorkoutSessionsById(
             @Parameter(description = "Fecha  (YYYY-MM-DD)") @PathVariable(required = false) Long id) {

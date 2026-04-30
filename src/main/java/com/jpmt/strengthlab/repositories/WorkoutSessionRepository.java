@@ -11,8 +11,6 @@ import java.util.Optional;
 
 @Repository
 public interface WorkoutSessionRepository extends JpaRepository<WorkoutSession, Long> {
-    WorkoutSession findWorkoutById(Long id);
-
     List<WorkoutSession> findByDateBetweenOrderByDateDesc(LocalDate from, LocalDate to);
 
     @EntityGraph(attributePaths = {
@@ -22,12 +20,4 @@ public interface WorkoutSessionRepository extends JpaRepository<WorkoutSession, 
     })
     Optional<WorkoutSession>findHeaderById(Long id);
 
-
-//    @EntityGraph(attributePaths = {
-//            "trainingSessionTemplate",
-//            "entries",
-//            "entries.exercise",
-//            "entries.sets"
-//    })
-//    Optional<WorkoutSession>findFullDayByDate(LocalDate date);
 }
